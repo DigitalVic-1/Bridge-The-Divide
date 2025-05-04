@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bridge the Divide</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fdfaf6;
+      color: #1a1a1a;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #b02a2a;
+      font-size: 3rem;
+    }
+    p.description {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .red-button {
+      background-color: #b02a2a;
+      color: white;
+    }
+    .light-button {
+      background-color: white;
+      border: 1px solid #999;
+    }
+    .post {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background: white;
+    }
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+    }
+    .respond {
+      color: #b02a2a;
+      cursor: pointer;
+      margin-top: 1rem;
+      display: inline-block;
+    }
+    form {
+      display: none;
+      margin-bottom: 2rem;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0 1rem;
+    }
+    img.banner {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      margin: 1rem 0 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>BRIDGE THE DIVIDE</h1>
+  <p class="description">
+    A platform for FNV members to exchange ideas across differences, safely and respectfully.
+  </p>
+  <img src="https://source.unsplash.com/800x200/?dialogue,community" alt="Banner" class="banner" />
+
+  <div class="buttons">
+    <button class="red-button" onclick="toggleForm()">Post an Idea</button>
+    <a href="discussions.html"><button class="light-button">View Discussions</button></a>
+    <a href="moderators.html"><button class="light-button">Moderators</button></a>
+    <a href="literature.html"><button class="light-button">Theories</button></a>
+    <a href="training.html"><button class="light-button">Training</button></a>
+  </div>
+
+  <form id="postForm">
+    <input type="text" id="author" placeholder="Your Name" required />
+    <textarea id="idea" placeholder="Your Idea" required></textarea>
+    <button type="submit" class="red-button">Submit</button>
+  </form>
+
+  <div id="posts"></div>
+
+  <script>
+    const form = document.getElementById('postForm');
+    const postsContainer = document.getElementById('posts');
+
+    function toggleForm() {
+      form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const author = document.getElementById('author').value;
+      const idea = document.getElementById('idea').value;
+      const post = { author, idea, timestamp: new Date().toLocaleString() };
+      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      posts.unshift(post);
+      localStorage.setItem('posts', JSON.stringify(posts));
+      form.reset();
+      toggleForm();
+      displayPosts();
+    });
+
+    function displayPosts() {
+      const posts = JSON.parse(localStorage.getItem('posts')) || [
+        { author: "Fatima de Jong", idea: "What if we set up open lunches where people with different views sit together?", timestamp: "Yesterday" },
+        { author: "Tom Bakker", idea: "We need to listen more before we react. A safe space means letting others speak too.", timestamp: "2 days ago" }
+      ];
+      postsContainer.innerHTML = posts.map(post => `
+        <div class="post">
+          <div class="post-header">
+            <span>${post.author}</span>
+            <span style="font-weight: normal; font-size: 0.9rem;">${post.timestamp}</span>
+          </div>
+          <p>${post.idea}</p>
+          <a class="respond">Respond</a> | <a style="font-size: 0.9rem; color: grey; cursor: pointer;">Report</a>
+        </div>
+      `).join('');
+    }
+
+    displayPosts();
+  </script>
+</body>
+</html>
