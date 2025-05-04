@@ -1,1 +1,54 @@
-<h1>View Discussions</h1><p>This is the discussions page. You can add threads here.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Discussions</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fdfaf6;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h1 {
+      color: #b02a2a;
+      text-align: center;
+    }
+    .thread {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background-color: #fff;
+    }
+    .thread-title {
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+    .thread-body {
+      display: none;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Discussions</h1>
+  <div class="thread">
+    <div class="thread-title" onclick="toggleBody(this)">How can we create more respectful spaces for disagreement?</div>
+    <div class="thread-body">Fatima: I think setting ground rules helps. <br>Tom: Moderators should gently intervene early if things get too heated.</div>
+  </div>
+  <div class="thread">
+    <div class="thread-title" onclick="toggleBody(this)">What role should the union play in public political debate?</div>
+    <div class="thread-body">Aisha: We can't stay neutral on everything. <br>Jeroen: True, but we must represent all members, not just one side.</div>
+  </div>
+  <script>
+    function toggleBody(el) {
+      const body = el.nextElementSibling;
+      body.style.display = body.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
